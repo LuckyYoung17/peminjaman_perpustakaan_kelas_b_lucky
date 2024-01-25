@@ -10,7 +10,8 @@ class AddPeminjamanController extends GetxController {
   final loading = false.obs;
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final TextEditingController tanggalPinjamController = TextEditingController();
-  final TextEditingController tanggalKembaliController = TextEditingController();
+  final TextEditingController tanggalKembaliController =
+      TextEditingController();
 
   final count = 0.obs;
   @override
@@ -35,17 +36,19 @@ class AddPeminjamanController extends GetxController {
       formKey.currentState?.save();
       if (formKey.currentState!.validate()) {
         final response =
-        await ApiProvider.instance().post(Endpoint.pinjam, data: {
-          "user_id": StorageProvider.read(StorageKey.idUser),
-          "book_id": Get.parameters['id'],
+            await ApiProvider.instance().post(Endpoint.pinjam, data: {
+          "user_id": (StorageProvider.read(StorageKey.idUser)),
+          "book_id": Get.parameters['id'].toString(),
           "tanggal_pinjam": tanggalPinjamController.text.toString(),
           "tanggal_kembali": tanggalKembaliController.text.toString(),
         });
         if (response.statusCode == 201) {
-          Get.snackbar("Peminjaman berhasil","Terima Kasih", backgroundColor: Colors.green);
+          Get.snackbar("Peminjaman berhasil", "Terima Kasih",
+              backgroundColor: Colors.green);
           Get.offAllNamed(Routes.BOOK);
         } else {
-          Get.snackbar("Sorry", "Add Peminjaman Gagal", backgroundColor: Colors.orange);
+          Get.snackbar("Sorry", "Add Peminjaman Gagal",
+              backgroundColor: Colors.orange);
         }
       }
       loading(false);

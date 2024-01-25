@@ -17,8 +17,8 @@ class PeminjamanView extends GetView<PeminjamanController> {
         itemCount: state!.length,
         itemBuilder: (context, index){
           return ListTile(
-            title: Text("${state[index].bookId}"),
-            subtitle: Text("${state[index].book?.judul}"),
+            title: Text("${state[index].book?.judul}"),
+            subtitle: Text("${state[index].tanggalPinjam}"),
           );
         },
         separatorBuilder: (context, index){
