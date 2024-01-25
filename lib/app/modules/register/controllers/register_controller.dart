@@ -29,38 +29,40 @@ class RegisterController extends GetxController {
     super.onClose();
   }
 
-  register() async{
+  register() async {
     loading(true);
-    try{
+    try {
       FocusScope.of(Get.context!).unfocus();
       formKey.currentState?.save();
-      if (formKey.currentState!.validate()){
-        final response = await ApiProvider.instance().post(Endpoint.register,
-            data: {
-              "nama": namaController.text.toString(),
-              "username": usernameController.text.toString(),
-              "telp": telpController.text.toString(),
-              "alamat": alamatController.text.toString(),
-              "password": passwordController.text.toString(),
-            });
-        if(response.statusCode == 201){
+      if (formKey.currentState!.validate()) {
+        final response =
+            await ApiProvider.instance().post(Endpoint.register, data: {
+          "nama": namaController.text.toString(),
+          "username": usernameController.text.toString(),
+          "telp": telpController.text.toString(),
+          "alamat": alamatController.text.toString(),
+          "password": passwordController.text.toString(),
+        });
+        if (response.statusCode == 201) {
           Get.back();
         } else {
-          Get.snackbar("Sorry", "Login Gagal",backgroundColor: Colors.orange);
+          Get.snackbar("Sorry", "Login Gagal", backgroundColor: Colors.orange);
         }
       }
       loading(false);
-    } on DioException catch(e){
+    } on DioException catch (e) {
       loading(false);
-      if (e.response!= null){
-        if (e.response?.data!= null){
-          Get.snackbar("Sorry", "${e.response?.data['message']}",backgroundColor: Colors.orange);
+      if (e.response != null) {
+        if (e.response?.data != null) {
+          Get.snackbar("Sorry", "${e.response?.data['message']}",
+              backgroundColor: Colors.orange);
         }
       } else {
-        Get.snackbar("Sorry", e.message ?? "",backgroundColor: Colors.red);
+        Get.snackbar("Sorry", e.message ?? "", backgroundColor: Colors.red);
       }
-    } catch (e) {loading(false);
-    Get.snackbar("Error", e.toString(), backgroundColor: Colors.red);
+    } catch (e) {
+      loading(false);
+      Get.snackbar("Error", e.toString(), backgroundColor: Colors.red);
     }
   }
 }

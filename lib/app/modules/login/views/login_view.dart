@@ -16,41 +16,67 @@ class LoginView extends GetView<LoginController> {
       ),
       body: Center(
           child: Form(
-            key: controller.formKey,
-            child: Column(
-              children: [
-                TextFormField(
-                  controller: controller.usernameController,
-                  decoration: InputDecoration(hintText: "Masukkan Username"),
-                  validator: (value){
-                    if (value!.length <1){
-                      return "Username tidak boleh kosong";
-                    }
-                    return null;
-                  },
-                ),
-                TextFormField(
-                  controller: controller.passwordController,
-                  decoration: InputDecoration(hintText: "Masukkan Password"),
-                  validator: (value){
-                    if (value!.length <1){
-                      return "Password tidak boleh kosong";
-                    }
-                    return null;
-                  },
-                ),
-                Obx(() => controller.loading.value?
-                CircularProgressIndicator():
-                ElevatedButton(onPressed: (){
-                  controller.login();
-                }, child: Text("Login"))
-                ),
-                ElevatedButton(onPressed: ()=> Get.toNamed(Routes.REGISTER),
-                    child: Text("Daftar"))
-              ],
+        key: controller.formKey,
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+              child: TextFormField(
+                controller: controller.usernameController,
+                decoration: InputDecoration(
+                    hintText: "Masukkan Username",
+                    icon: Icon(Icons.person),
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10))),
+                validator: (value) {
+                  if (value!.length < 1) {
+                    return "Username tidak boleh kosong";
+                  }
+                  return null;
+                },
+              ),
             ),
-          )
-      ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+              child: TextFormField(
+                controller: controller.passwordController,
+                decoration: InputDecoration(
+                    hintText: "Masukkan Password",
+                    icon: Icon(Icons.lock),
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10))),
+                validator: (value) {
+                  if (value!.length < 1) {
+                    return "Password tidak boleh kosong";
+                  }
+                  return null;
+                },
+              ),
+            ),
+            SizedBox(
+                width: 100,height: 20,
+              child: Obx(() => controller.loading.value
+                  ? CircularProgressIndicator()
+                  : ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.red),
+                  onPressed: () {
+                    controller.login();
+                  },
+                  child: Text("Login",style: TextStyle(color: Colors.white),))),
+            ),
+            Padding(padding: const EdgeInsets.symmetric(vertical: 5),),
+            SizedBox(
+              width: 100,height: 20,
+              child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.red),
+                  onPressed: () => Get.toNamed(Routes.REGISTER),
+                  child: Text("Daftar",style: TextStyle(color: Colors.white),)),
+            )
+          ],
+        ),
+      )),
     );
   }
 }
