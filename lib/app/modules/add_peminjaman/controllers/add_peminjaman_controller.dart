@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:peminjam_perpustakaan_kelas_b/app/data/data/constant/endpoint.dart';
 import 'package:peminjam_perpustakaan_kelas_b/app/data/data/provider/api_provider.dart';
 import 'package:peminjam_perpustakaan_kelas_b/app/data/data/provider/storage_provider.dart';
+import 'package:peminjam_perpustakaan_kelas_b/app/routes/app_pages.dart';
 
 class AddPeminjamanController extends GetxController {
   final loading = false.obs;
@@ -41,7 +42,8 @@ class AddPeminjamanController extends GetxController {
           "tanggal_kembali": tanggalKembaliController.text.toString(),
         });
         if (response.statusCode == 201) {
-          Get.back();
+          Get.snackbar("Peminjaman berhasil","Terima Kasih", backgroundColor: Colors.green);
+          Get.offAllNamed(Routes.BOOK);
         } else {
           Get.snackbar("Sorry", "Add Peminjaman Gagal", backgroundColor: Colors.orange);
         }
